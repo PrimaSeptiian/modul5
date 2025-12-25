@@ -9,7 +9,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// Group Auth
+// --- AUTH ROUTES ---
 Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
@@ -17,13 +17,15 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::get('me', [AuthController::class, 'me'])->middleware('auth:api');
 });
 
-// Endpoint Public (GET)
-Route::get('todos', [TodoController::class, 'index']);
-Route::get('todos/{id}', [TodoController::class, 'show']);
+// --- PUBLIC ROUTES (TUGAS POINT 2a & 2b) ---
+// Bisa diakses siapa saja tanpa token
+Route::get('todos', [TodoController::class, 'index']); // Get All
+Route::get('todos/{id}', [TodoController::class, 'show']); // Get Detail
 
-// Endpoint Protected (POST, PUT, DELETE) -> Perlu Login
+// --- PROTECTED ROUTES (TUGAS POINT 2c, 2d, 2e) ---
+// Hanya bisa diakses jika punya Token (Login dulu)
 Route::middleware(['auth:api'])->group(function () {
-    Route::post('todos', [TodoController::class, 'store']);
-    Route::put('todos/{id}', [TodoController::class, 'update']);
-    Route::delete('todos/{id}', [TodoController::class, 'destroy']);
+    Route::post('todos', [TodoController::class, 'store']);       // Create
+    Route::put('todos/{id}', [TodoController::class, 'update']);  // Update
+    Route::delete('todos/{id}', [TodoController::class, 'destroy']); // Delete
 });

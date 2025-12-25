@@ -9,9 +9,10 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-   public function up(): void
+    public function up(): void
 {
     Schema::table('todos', function (Blueprint $table) {
+        // Tambahkan kolom file_path setelah category
         $table->string('file_path')->nullable()->after('category');
     });
 }
@@ -23,3 +24,4 @@ public function down(): void
     });
 }
 };
+

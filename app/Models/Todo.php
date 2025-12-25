@@ -10,8 +10,8 @@ class Todo extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'title', 'description', 'status', 'due_date', 'priority', 'category'
-    ];
+    'title', 'description', 'status', 'due_date', 'priority', 'category', 'file_path'
+];
 
     protected $casts = [
         'due_date' => 'date',

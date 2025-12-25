@@ -14,13 +14,11 @@ class BookingController extends Controller
     {
         $query = Booking::query();
 
-        // Fitur Search (Mencari berdasarkan nama pelanggan atau alamat)
         if ($search = $request->query('search')) {
             $query->where('customer_name', 'like', "%{$search}%")
                   ->orWhere('address', 'like', "%{$search}%");
         }
 
-        // Fitur Sorting (orderBy & sortBy)
         $sortBy = $request->query('sortBy', 'created_at'); // Default sort by created_at
         $orderBy = $request->query('orderBy', 'desc');     // Default order descending
         $query->orderBy($sortBy, $orderBy);
