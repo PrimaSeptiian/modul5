@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
-use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
+// [PERBAIKAN] Gunakan namespace ini, BUKAN Tymon
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -22,14 +25,15 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
     ];
 
-    // --- BAGIAN INI YANG DIGANTI (VERSI BARU) ---
-    // Menggunakan protected $casts agar lebih kompatibel dan tidak error merah
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
 
-    // --- FUNCTION WAJIB JWT ---
+    // --- WAJIB ADA UNTUK JWT ---
     public function getJWTIdentifier()
     {
         return $this->getKey();
