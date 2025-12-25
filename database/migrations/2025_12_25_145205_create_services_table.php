@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();  // Kolom UUID (Wajib untuk fitur Delete/Show)
+            $table->string('name');          // Kolom Name (Agar tidak error 'no column name')
+            $table->decimal('price', 10, 2); // Kolom Price
+            $table->text('description')->nullable(); // Kolom Description
             $table->timestamps();
         });
     }
